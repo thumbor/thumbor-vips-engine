@@ -93,3 +93,14 @@ def test_can_get_grayscale_and_not_update_image(context, face_image, snapshot):
     assert image != engine.image
     contents = image.write_to_buffer(".JPEG", Q=95)
     assert contents == snapshot
+
+
+def test_can_generate_image(context, snapshot):
+    engine = Engine(context)
+    assert engine is not None
+
+    image = engine.gen_image((300, 200), (0, 255, 0))
+
+    assert image != engine.image
+    contents = image.write_to_buffer(".JPEG", Q=95)
+    assert contents == snapshot

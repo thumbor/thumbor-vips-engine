@@ -8,6 +8,8 @@
 # http://www.opensource.org/licenses/mit-license
 # Copyright (c) 2021 Bernardo Heynemann heynemann@gmail.com
 
+from typing import Union
+
 import pyvips
 from pyvips.enums import Direction
 from thumbor.engines import BaseEngine
@@ -35,8 +37,12 @@ class Engine(BaseEngine):  # pylint: disable=too-many-public-methods
 
         return (self.image.width, self.image.height)
 
-    def gen_image(self, size, color) -> pyvips.Image:
-        return pyvips.Image.Black(size[0], size[1], bands=3)
+    def gen_image(
+        self, size: tuple[int], color: Union[int, tuple[int]]
+    ) -> pyvips.Image:
+        image = pyvips.Image.Black(size[0], size[1], bands=3)
+        image = image.draw_rect(color, 0, 0, size[0], size[1], fill=True)
+        return image
 
     def create_image(self, buffer) -> pyvips.Image:
         self.image = pyvips.Image.new_from_buffer(

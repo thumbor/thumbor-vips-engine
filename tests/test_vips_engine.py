@@ -9,7 +9,6 @@
 # http://www.apache.org/licenses/
 
 import pytest
-from preggy import expect
 
 from thumbor_vips_engine.engine import Engine
 
@@ -20,20 +19,32 @@ async def test_can_create_image(context, default_image, snapshot):
 
     engine.create_image(default_image)
 
-    expect(engine).not_to_be_null()
-    expect(engine.image).not_to_be_null()
+    assert engine is not None
+    assert engine.image is not None
     contents = engine.read(".jpg", 95)
-    expect(contents).to_equal(snapshot)
+    assert contents == snapshot
+
+
+@pytest.mark.asyncio
+async def test_can_get_size(context, default_image):
+    engine = Engine(context)
+    engine.create_image(default_image)
+    assert engine is not None
+    assert engine.image is not None
+
+    size = engine.size
+
+    assert size == (300, 400)
 
 
 @pytest.mark.asyncio
 async def test_can_resize(context, default_image, snapshot):
     engine = Engine(context)
     engine.create_image(default_image)
+    assert engine is not None
+    assert engine.image is not None
 
     engine.resize(300, 200)
 
-    expect(engine).not_to_be_null()
-    expect(engine.image).not_to_be_null()
     contents = engine.read(".jpg", 95)
-    expect(contents).to_equal(snapshot)
+    assert contents == snapshot

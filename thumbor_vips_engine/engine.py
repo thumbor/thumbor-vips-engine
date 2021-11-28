@@ -27,6 +27,13 @@ class Engine(BaseEngine):  # pylint: disable=too-many-public-methods
     #  def __init__(self, context):
     #  super().__init__(context)
 
+    @property
+    def size(self) -> tuple[int]:
+        if self.image is None:
+            raise RuntimeError("Image must be loaded before verifying size.")
+
+        return (self.image.width, self.image.height)
+
     def gen_image(self, size, color) -> pyvips.Image:
         return pyvips.Image.Black(size[0], size[1], bands=3)
 

@@ -26,6 +26,10 @@ TESTS_REQUIREMENTS = [
     "pytest-cov==2.*,>=2.8.1",
     "pytest-tldr==0.*,>=0.2.1",
     "pytest-xdist==1.*,>=1.31.0",
+    "pytest-approvaltests>=0.2.3,<1.0.0",
+    "pytest-sugar>=0.9.4,<1.0.0",
+    "pytest-icdiff>=0.5,<1.0.0",
+    "approvaltests>=3.1.0,!=3.1.1",
     "yanc==0.*,>=0.3.3",
     "mock==3.*,>=3.0.5",
     "pyssim==0.*,>=0.4.0",
@@ -67,6 +71,7 @@ thumbor engine using the libvips imaging library for transforming images
     install_requires=[
         "thumbor>=7.0.0b1",
         "pycurl>=7.44.1,<8.0.0",
+        "pyvips>=2.1.16,<3.0.0",
     ],
     extras_require={"tests": TESTS_REQUIREMENTS},
     entry_points={

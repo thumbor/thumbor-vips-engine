@@ -48,3 +48,17 @@ async def test_can_resize(context, default_image, snapshot):
 
     contents = engine.read(".jpg", 95)
     assert contents == snapshot
+
+
+@pytest.mark.asyncio
+async def test_can_crop(context, default_image, snapshot):
+    engine = Engine(context)
+    engine.create_image(default_image)
+    assert engine is not None
+    assert engine.image is not None
+
+    engine.crop(10, 20, 200, 350)
+
+    contents = engine.read(".jpg", 95)
+    assert contents == snapshot
+    assert engine.size == (190, 330)

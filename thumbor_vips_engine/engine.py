@@ -9,6 +9,7 @@
 # Copyright (c) 2021 Bernardo Heynemann heynemann@gmail.com
 
 import pyvips
+from pyvips.enums import Direction
 from thumbor.engines import BaseEngine
 
 FORMATS = {
@@ -60,10 +61,10 @@ class Engine(BaseEngine):  # pylint: disable=too-many-public-methods
         pass
 
     def flip_horizontally(self):
-        raise NotImplementedError()
+        self.image = self.image.flip(Direction.HORIZONTAL)
 
     def flip_vertically(self):
-        raise NotImplementedError()
+        self.image = self.image.flip(Direction.VERTICAL)
 
     def rotate(self, degrees):
         """
@@ -71,12 +72,13 @@ class Engine(BaseEngine):  # pylint: disable=too-many-public-methods
         :param degrees: Amount to rotate in degrees.
         :type amount: int
         """
+        raise NotImplementedError()
 
     def read_multiple(self, images, extension=None):
         raise NotImplementedError()
 
     def read(self, extension, quality):
-        return self.image.write_to_buffer(FORMATS[extension], Q=100)
+        return self.image.write_to_buffer(FORMATS[extension], Q=quality)
 
     def get_image_data(self):
         raise NotImplementedError()
@@ -101,8 +103,16 @@ class Engine(BaseEngine):  # pylint: disable=too-many-public-methods
     def strip_exif(self):
         pass
 
-    def convert_to_grayscale(self, update_image=True, alpha=True):
-        raise NotImplementedError()
+    def convert_to_grayscale(
+        self, update_image=True, alpha=True
+    ) -> pyvips.Image:
+        image = self.image.colourspace("b-w")
+        if update_image:
+            self.image = image
+
+        # [TODO]: keep alpha
+
+        return image
 
     def draw_rectangle(self, x, y, width, height):
         raise NotImplementedError()

@@ -8,13 +8,10 @@
 # Version 2.0, January 2004
 # http://www.apache.org/licenses/
 
-import pytest
-
 from thumbor_vips_engine.engine import Engine
 
 
-@pytest.mark.asyncio
-async def test_can_create_image(context, default_image, snapshot):
+def test_can_create_image(context, default_image, snapshot):
     engine = Engine(context)
 
     engine.create_image(default_image)
@@ -25,8 +22,7 @@ async def test_can_create_image(context, default_image, snapshot):
     assert contents == snapshot
 
 
-@pytest.mark.asyncio
-async def test_can_get_size(context, default_image):
+def test_can_get_size(context, default_image):
     engine = Engine(context)
     engine.create_image(default_image)
     assert engine is not None
@@ -37,8 +33,7 @@ async def test_can_get_size(context, default_image):
     assert size == (300, 400)
 
 
-@pytest.mark.asyncio
-async def test_can_resize(context, default_image, snapshot):
+def test_can_resize(context, default_image, snapshot):
     engine = Engine(context)
     engine.create_image(default_image)
     assert engine is not None
@@ -50,8 +45,7 @@ async def test_can_resize(context, default_image, snapshot):
     assert contents == snapshot
 
 
-@pytest.mark.asyncio
-async def test_can_crop(context, default_image, snapshot):
+def test_can_crop(context, default_image, snapshot):
     engine = Engine(context)
     engine.create_image(default_image)
     assert engine is not None
@@ -62,3 +56,40 @@ async def test_can_crop(context, default_image, snapshot):
     contents = engine.read(".jpg", 95)
     assert contents == snapshot
     assert engine.size == (190, 330)
+
+
+def test_can_flip_horizontally(context, face_image, snapshot):
+    engine = Engine(context)
+    engine.create_image(face_image)
+    assert engine is not None
+    assert engine.image is not None
+
+    engine.flip_horizontally()
+
+    contents = engine.read(".jpg", 95)
+    assert contents == snapshot
+
+
+def test_can_flip_vertically(context, face_image, snapshot):
+    engine = Engine(context)
+    engine.create_image(face_image)
+    assert engine is not None
+    assert engine.image is not None
+
+    engine.flip_vertically()
+
+    contents = engine.read(".jpg", 95)
+    assert contents == snapshot
+
+
+def test_can_get_grayscale_and_not_update_image(context, face_image, snapshot):
+    engine = Engine(context)
+    engine.create_image(face_image)
+    assert engine is not None
+    assert engine.image is not None
+
+    image = engine.convert_to_grayscale(False)
+
+    assert image != engine.image
+    contents = image.write_to_buffer(".JPEG", Q=95)
+    assert contents == snapshot

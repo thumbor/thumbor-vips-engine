@@ -62,7 +62,7 @@ def too_small_image():
 
 
 @pytest.fixture()
-def too_heavy_image():
+def face_image():
     return get_image(TOO_HEAVY_IMAGE_PATH)
 
 

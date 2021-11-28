@@ -1,7 +1,7 @@
 setup:
 	@pip install -e .[tests]
 
-test: unit coverage flake
+test: unit flake pylint
 
 unit:
 	@pytest --cov=thumbor_vips_engine tests/
@@ -13,7 +13,7 @@ flake:
 	@flake8 --config .flake8
 
 pylint:
-	@pylint thumbor_aws tests
+	@pylint thumbor_vips_engine tests
 
 run:
 	@thumbor -c thumbor.conf -l debug

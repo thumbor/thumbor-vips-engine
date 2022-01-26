@@ -34,6 +34,7 @@ TESTS_REQUIREMENTS = [
     "yanc==0.*,>=0.3.3",
     "mock==3.*,>=3.0.5",
     "pyssim==0.*,>=0.4.0",
+    "pre-commit==2.*,>=2.17.0",
     "syrupy==1.*,>=1.7.3",
 ]
 

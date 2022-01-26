@@ -22,8 +22,6 @@ jobs:
       - name: Set up Homebrew
         id: set-up-homebrew
         uses: Homebrew/actions/setup-homebrew@master
-      - name: Install libvips from brew
-        run: brew install vips
       # - name: Code Climate Before Build
         # if: matrix.python-version == '3.10'
         # env:
@@ -43,6 +41,8 @@ jobs:
       - name: APT Install
         run: DEBIAN_FRONTEND=noninteractive sudo apt-get install -y python3-dev libcurl4-openssl-dev
           libgnutls28-dev python3-all-dev make zlib1g-dev gcc libssl-dev build-essential
+      - name: Install libvips from brew
+        run: brew install vips
       - name: Setup
         run: make ci-venv setup
       - name: Run Unit Tests

@@ -1,22 +1,22 @@
 setup:
-	@pip install -e .[tests]
+	@python3 -m pip install -e .[tests]
 
 test: unit flake pylint
 
 unit:
-	@pytest --cov=thumbor_vips_engine tests/
+	@python3 -m pytest --cov=thumbor_vips_engine tests/
 
 format:
-	@black .
+	@python3 -m black .
 
 flake:
-	@flake8 --config .flake8
+	@python3 -m flake8 --config .flake8
 
 pylint:
-	@pylint thumbor_vips_engine tests
+	@python3 -m pylint thumbor_vips_engine tests
 
 run:
-	@thumbor -c thumbor.conf -l debug
+	@python3 -m thumbor -c thumbor.conf -l debug
 
 publish:
 	@python setup.py sdist

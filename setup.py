@@ -18,6 +18,7 @@ except ImportError:
 
 TESTS_REQUIREMENTS = [
     "autoimport==1.*,>=1.0.4",
+    "black==21.*,>=21.12b0",
     "coverage==5.*,>=5.0.3",
     "flake8==3.*,>=3.7.9",
     "isort==4.*,>=4.3.21",

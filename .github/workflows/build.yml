@@ -29,6 +29,8 @@ jobs:
           # ./test-reporter-latest-linux-amd64 before-build
       - name: Create Virtualenv
         run: python3 -m venv ~/thumbor-libvips-engine
+      - name: Update PIP
+        run: python3 -m pip install -U pip
       - name: APT Update
         run: apt-get update -y
       - name: APT Install

@@ -19,6 +19,11 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           architecture: x64
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+      - name: Install libvips from brew
+        run: brew install vips
       # - name: Code Climate Before Build
         # if: matrix.python-version == '3.10'
         # env:

@@ -3,7 +3,7 @@ name: build
 on: [push, pull_request]
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
       matrix:
@@ -31,7 +31,8 @@ jobs:
         run: sudo apt-get update -y
       - name: APT Install
         run: sudo apt-get install -y python3-dev libcurl4-openssl-dev libgnutls28-dev
-          python3-all-dev make zlib1g-dev gcc libssl-dev build-essential libvips
+          python3-all-dev make zlib1g-dev gcc libssl-dev build-essential build-essential
+          devscripts libvips
       - name: Create Virtualenv
         run: python3 -m venv ~/thumbor-libvips-engine
       - name: Activate Virtualenv

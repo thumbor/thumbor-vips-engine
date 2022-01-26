@@ -72,9 +72,9 @@ thumbor engine using the libvips imaging library for transforming images
     include_package_data=True,
     package_data={"": ["*.xml"]},
     install_requires=[
-        "thumbor>=7.0.0b1",
-        "pycurl>=7.44.1,<8.0.0",
-        "pyvips>=2.1.16,<3.0.0",
+        "thumbor==7.*,>=7.0.3",
+        "pycurl==7.*,>=7.44.1",
+        "pyvips==2.*,>=2.1.16",
     ],
     extras_require={"tests": TESTS_REQUIREMENTS},
     entry_points={

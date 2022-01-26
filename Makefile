@@ -22,3 +22,9 @@ publish:
 	@python setup.py sdist
 	@twine upload dist/*
 	@rm -rf dist/
+
+ci-libvips:
+		@echo "Setting up libvips..."
+		@wget https://github.com/libvips/libvips/releases/download/v8.12.2/vips-8.12.2.tar.gz
+		@tar xzf vips-8.12.2.tar.gz
+		@cd vips-8.12.2

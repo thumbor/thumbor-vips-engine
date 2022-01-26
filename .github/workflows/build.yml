@@ -3,7 +3,7 @@ name: build
 on: [push, pull_request]
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
@@ -34,9 +34,9 @@ jobs:
       - name: Update PIP
         run: python3 -m pip install -U pip
       - name: APT Update
-        run: apt-get update -y
+        run: sudo apt-get update -y
       - name: APT Install
-        run: DEBIAN_FRONTEND=noninteractive apt-get install -y python3-dev libcurl4-openssl-dev
+        run: DEBIAN_FRONTEND=noninteractive sudo apt-get install -y python3-dev libcurl4-openssl-dev
           libgnutls28-dev python3-all-dev make zlib1g-dev gcc libssl-dev build-essential
           libvips
       - name: Setup

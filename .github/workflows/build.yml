@@ -35,8 +35,7 @@ jobs:
         run: apt-get update -y
       - name: APT Install
         run: apt-get install -y python3-dev libcurl4-openssl-dev libgnutls28-dev python3-all-dev
-          make zlib1g-dev gcc libssl-dev build-essential build-essential devscripts
-          libvips
+          make zlib1g-dev gcc libssl-dev build-essential libvips
       - name: Setup
         run: make setup
       - name: Run Unit Tests

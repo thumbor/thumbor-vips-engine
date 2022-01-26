@@ -22,3 +22,6 @@ publish:
 	@python setup.py sdist
 	@twine upload dist/*
 	@rm -rf dist/
+
+ci-venv:
+		@. ~/thumbor-libvips-engine/bin/activate

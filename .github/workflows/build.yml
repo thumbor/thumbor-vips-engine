@@ -12,7 +12,7 @@ jobs:
           - '3.8'
           - '3.9'
           - '3.10'
-    # container: thumbororg/thumbor-test:${{ matrix.image-tag }}
+    container: python:{{ matrix.image-tag }}-bullseye
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2

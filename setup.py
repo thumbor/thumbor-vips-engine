@@ -12,27 +12,29 @@ from distutils.core import setup
 
 try:
     from thumbor_vips_engine import __version__
+
 except ImportError:
     __version__ = "0.0.0"
 
 TESTS_REQUIREMENTS = [
+    "autoimport==1.*,>=1.0.4",
     "coverage==5.*,>=5.0.3",
     "flake8==3.*,>=3.7.9",
     "isort==4.*,>=4.3.21",
+    "mypy>=0.931",
     "preggy==1.*,>=1.4.4",
     "pylint==2.*,>=2.4.4",
-    "pytest==5.*,>=5.3.5",
-    "pytest-asyncio==0.*,>=0.10.0",
-    "pytest-cov==2.*,>=2.8.1",
+    "pytest==6.*,>=6.2.5",
+    "pytest-asyncio==0.*,>=0.17.2",
+    "pytest-cov==3.*,>=3.0.0",
     "pytest-tldr==0.*,>=0.2.1",
-    "pytest-xdist==1.*,>=1.31.0",
-    "pytest-approvaltests>=0.2.3,<1.0.0",
+    "pytest-xdist==2.*,>=2.5.0",
     "pytest-sugar>=0.9.4,<1.0.0",
     "pytest-icdiff>=0.5,<1.0.0",
-    "approvaltests>=3.1.0,!=3.1.1",
     "yanc==0.*,>=0.3.3",
     "mock==3.*,>=3.0.5",
     "pyssim==0.*,>=0.4.0",
+    "syrupy==1.*,>=1.7.3",
 ]
 
 

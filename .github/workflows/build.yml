@@ -15,10 +15,10 @@ jobs:
     container: python:${{ matrix.python-version }}-bullseye
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python-version }}
-          architecture: x64
+      # - uses: actions/setup-python@v2
+        # with:
+          # python-version: ${{ matrix.python-version }}
+          # architecture: x64
       # - name: Code Climate Before Build
         # if: matrix.python-version == '3.10'
         # env:
@@ -36,7 +36,7 @@ jobs:
       - name: Create Virtualenv
         run: python3 -m venv ~/thumbor-libvips-engine
       - name: Activate Virtualenv
-        run: source ~/thumbor-libvips-engine/bin/activate
+        run: /bin/bash -c "source ~/thumbor-libvips-engine/bin/activate"
       - name: Setup
         run: make setup
       - name: Run Unit Tests

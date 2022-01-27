@@ -33,8 +33,6 @@ TESTS_REQUIREMENTS = [
     "pytest-sugar>=0.9.4,<1.0.0",
     "pytest-icdiff>=0.5,<1.0.0",
     "yanc==0.*,>=0.3.3",
-    "mock==3.*,>=3.0.5",
-    "pyssim==0.*,>=0.4.0",
     "pre-commit==2.*,>=2.17.0",
     "syrupy==1.*,>=1.7.3",
 ]
@@ -71,7 +69,9 @@ thumbor engine using the libvips imaging library for transforming images
     packages=["thumbor_vips_engine"],
     package_dir={"thumbor_vips_engine": "thumbor_vips_engine"},
     include_package_data=True,
-    package_data={"": ["*.xml"]},
+    package_data={
+        "thumbor_vips_engine": ["*.xml", "*.jpg", "*.jpeg", "*.gif", "*.png"],
+    },
     install_requires=[
         "thumbor==7.*,>=7.0.3",
         "pycurl==7.*,>=7.44.1",

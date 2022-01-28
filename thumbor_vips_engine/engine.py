@@ -35,7 +35,7 @@ class Engine(BaseEngine):  # pylint: disable=too-many-public-methods
         return self.image
 
     def gen_image(
-        self, size: tuple[int, int], color: Union[int, tuple[int, int, int]]
+        self, size: Tuple[int, int], color: Union[int, Tuple[int, int, int]]
     ) -> pyvips.Image:
         image = pyvips.Image.Black(size[0], size[1], bands=3)
         image = image.draw_rect(color, 0, 0, size[0], size[1], fill=True)
@@ -43,7 +43,7 @@ class Engine(BaseEngine):  # pylint: disable=too-many-public-methods
         return image
 
     @property
-    def size(self) -> tuple[int, int]:
+    def size(self) -> Tuple[int, int]:
         if self.image is None:
             raise RuntimeError("Image must be loaded before verifying size.")
 

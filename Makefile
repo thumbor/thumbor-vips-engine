@@ -54,7 +54,7 @@ docker-unit-with-coverage:
 
 coveralls:
 	@pip install --upgrade coveralls
-	@coveralls --service=github
+	@coveralls
 
 docker-lint:
 	@docker run --rm -v $$(pwd):/app ${DOCKER_IMAGE}:latest /bin/bash -l -c "make flake pylint"

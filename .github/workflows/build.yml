@@ -16,6 +16,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run Unit Tests
-        run: PYTHON_VERSION=${{ matrix.python_version}} make docker-test
+        run: PYTHON_VERSION=${{ matrix.python-version}} make docker-test
       - name: Lint
-        run: PYTHON_VERSION=${{ matrix.python_version}} make docker-build docker-lint
+        run: PYTHON_VERSION=${{ matrix.python-version}} make docker-build docker-lint

@@ -1,4 +1,5 @@
 DOCKER_IMAGE=thumbororg/docker-pyvips-engine
+PYTHON_VERSION?=3.10
 
 setup:
 	@python3 -m pip install -e .[tests]
@@ -33,7 +34,7 @@ ci-venv:
 	@. ~/pyvips/bin/activate
 
 docker-build:
-	@docker build -t ${DOCKER_IMAGE}:latest --build-arg PYTHON_VERSION=3.10 .
+	@docker build -t ${DOCKER_IMAGE}:latest --build-arg PYTHON_VERSION=${PYTHON_VERSION} .
 
 docker-shell: docker-build
 	@docker run --rm -it -v $$(pwd):/app ${DOCKER_IMAGE}:latest /bin/bash -l

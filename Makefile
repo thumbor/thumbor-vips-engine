@@ -1,3 +1,5 @@
+DOCKER_IMAGE=thumbororg/docker-pyvips-engine
+
 setup:
 	@python3 -m pip install -e .[tests]
 
@@ -31,16 +33,19 @@ ci-venv:
 	@. ~/pyvips/bin/activate
 
 docker-build:
-	@docker build -t thumbor-pyvips-engine .
+	@docker build -t ${DOCKER_IMAGE}:latest --build-arg PYTHON_VERSION=3.10 .
 
 docker-shell: docker-build
-	@docker run --rm -it -v $$(pwd):/app thumbor-pyvips-engine:latest /bin/bash -l
+	@docker run --rm -it -v $$(pwd):/app ${DOCKER_IMAGE}:latest /bin/bash -l
 
 docker-run: docker-build
-	@docker run --rm -v $$(pwd):/app thumbor-pyvips-engine:latest /bin/bash -l -c "make local-run"
+	@docker run --rm -v $$(pwd):/app ${DOCKER_IMAGE}:latest /bin/bash -l -c "make local-run"
 
 docker-test: docker-build
-	@docker run --rm -v $$(pwd):/app thumbor-pyvips-engine:latest /bin/bash -l -c "make local-unit"
+	@docker run --rm -v $$(pwd):/app ${DOCKER_IMAGE}:latest /bin/bash -l -c "make local-unit"
 
 docker-lint: docker-build
-	@docker run --rm -v $$(pwd):/app thumbor-pyvips-engine:latest /bin/bash -l -c "make flake pylint"
+	@docker run --rm -v $$(pwd):/app ${DOCKER_IMAGE}:latest /bin/bash -l -c "make flake pylint"
+
+docker-push:
+	@docker push ${DOCKER_IMAGE}:latest

@@ -1,10 +1,12 @@
-FROM thumbororg/alpine-pyvips:latest
+ARG PYTHON_VERSION 3.10
+FROM thumbororg/alpine-pyvips:${PYTHON_VERSION}
 
 RUN set -x -o pipefail \
     && export PYCURL_SSL_LIBRARY=openssl \
     && apk update \
     && apk upgrade \
     && apk add libcurl curl-dev openssl-dev \
+	libffi libffi-dev gcc g++ musl-dev \
 	jpeg-dev zlib-dev libjpeg \
     && rm -rf /var/cache/apk/* \
     && rm -rf /root/.cache/pip

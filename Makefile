@@ -50,7 +50,7 @@ docker-unit:
 	@docker run --rm -v $$(pwd):/app ${DOCKER_IMAGE}:latest /bin/bash -l -c "make local-unit"
 
 docker-unit-with-coverage:
-	@docker run --rm -v $$(pwd):/app ${DOCKER_IMAGE}:latest /bin/bash -l -c "make local-unit coveralls"
+	@docker run --rm -v $$(pwd):/app ${DOCKER_IMAGE}:latest /bin/bash -l -c "GITHUB_TOKEN=${GITHUB_TOKEN} make local-unit coveralls"
 
 coveralls:
 	@pip install --upgrade coveralls

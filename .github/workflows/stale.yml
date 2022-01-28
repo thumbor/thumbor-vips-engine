@@ -7,7 +7,7 @@
 name: Close stale issues and PRs
 on:
   schedule:
-    - cron: '* */6 * * *'
+    - cron: '* 23 * * *'
 
 jobs:
   stale:

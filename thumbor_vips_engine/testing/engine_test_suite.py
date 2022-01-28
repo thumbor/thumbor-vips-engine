@@ -10,7 +10,7 @@
 
 import unicodedata
 from os.path import abspath, dirname, join
-from typing import Optional
+from typing import Optional, Tuple
 
 import pytest
 from syrupy.assertion import SnapshotAssertion
@@ -51,9 +51,14 @@ class JPEGImageExtension(SingleFileSnapshotExtension):
 class EngineTestSuite:
     @pytest.fixture(autouse=True)
     def engine(
+<<<<<<< HEAD
         self,
         context: Optional[Context],  # pylint: disable=unused-argument
     ) -> BaseEngine:
+=======
+        self, context: Optional[Context]  # pylint: disable=unused-argument
+    ) -> Optional[BaseEngine]:
+>>>>>>> Additional tests
         return None
 
     @pytest.fixture(autouse=True)
@@ -83,7 +88,7 @@ class EngineTestSuite:
     def snapshot(self, snapshot: SnapshotAssertion) -> SnapshotAssertion:
         return snapshot.use_extension(JPEGImageExtension)
 
-    def test_can_create_engine(
+    def test_can_create_image(
         self,
         default_image: bytes,
         engine: BaseEngine,
@@ -96,6 +101,26 @@ class EngineTestSuite:
         contents = engine.read(".jpg", 95)
         assert contents == snapshot
 
+    @pytest.mark.parametrize(
+        "buffer",
+        [
+            None,
+            "",
+        ],
+    )
+    def test_create_image_fails_with_invalid_buffer(
+        self,
+        engine: BaseEngine,
+        buffer: Optional[bytes],
+    ) -> None:
+        try:
+            engine.create_image(buffer)
+            raise AssertionError("Should not have gotten this far")
+        except RuntimeError as error:
+            assert str(error) == "Image buffer can't be null or empty.", str(
+                error
+            )
+
     def test_can_get_size(
         self, engine: BaseEngine, default_image: bytes
     ) -> None:
@@ -105,9 +130,15 @@ class EngineTestSuite:
 
         assert size == (300, 400)
 
+<<<<<<< HEAD
     def test_get_size_raises_if_no_image(self, engine: BaseEngine) -> None:
         try:
             engine.size  # noqa pylint: disable=pointless-statement
+=======
+    def test_size_fails_if_no_image_created(self, engine: BaseEngine) -> None:
+        try:
+            engine.size  # pylint: disable=pointless-statement
+>>>>>>> Additional tests
             raise AssertionError("Should not have gotten this far")
         except RuntimeError as error:
             assert (
@@ -127,19 +158,34 @@ class EngineTestSuite:
         assert img.height == 30
         assert engine.read(".jpg", 95) == snapshot
 
+    @pytest.mark.parametrize(
+        "dimensions,expected",
+        [
+            ((800, 533), (800, 533)),
+            ((401, 267), (401, 267)),
+            ((100, 400), (100, 67)),
+            ((0, 0), (800, 533)),
+            ((0, 1), (1, 1)),
+            ((1, 0), (1, 1)),
+        ],
+    )
     def test_can_resize(
         self,
         face_image: bytes,
         engine: BaseEngine,
         snapshot: SnapshotAssertion,
+        dimensions: Tuple[int, int],
+        expected: Tuple[int, int],
     ) -> None:
         engine.create_image(face_image)
 
-        engine.resize(401, 267)
+        engine.resize(dimensions[0], dimensions[1])
 
         contents = engine.read(".jpg", 95)
-        assert engine.size == (401, 267), engine.size
-        assert contents == snapshot
+        assert engine.size == expected, engine.size
+        assert (
+            contents == snapshot
+        ), f"Snapshot failed for resize to {dimensions}"
 
     def test_can_crop(
         self,

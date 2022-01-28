@@ -29,6 +29,9 @@ class Engine(BaseEngine):  # pylint: disable=too-many-public-methods
     image: pyvips.Image = None
 
     def create_image(self, buffer: bytes) -> pyvips.Image:
+        if buffer is None or buffer == "":
+            raise RuntimeError("Image buffer can't be null or empty.")
+
         # TODO: Get from thumbor context whether access needs to be random
         self.image = pyvips.Image.new_from_buffer(buffer, "", access="random")
 
@@ -53,12 +56,18 @@ class Engine(BaseEngine):  # pylint: disable=too-many-public-methods
         self.image = self.image.crop(left, top, right - left, bottom - top)
 
     def resize(self, width: int, height: int) -> None:
+        scale = 1.0
+
+        if width == 0:
+            width = self.size[0]
+
+        if height == 0:
+            height = self.size[1]
+
         if width > height:
             scale = float(height) / self.image.height
         elif height > width:
             scale = float(width) / self.image.width
-        else:
-            scale = 1.0
 
         self.image = self.image.resize(scale)
 

@@ -15,8 +15,10 @@ from typing import Optional
 import pytest
 from syrupy.assertion import SnapshotAssertion
 from syrupy.extensions.single_file import SingleFileSnapshotExtension
-from thumbor.context import Context
+from thumbor.config import Config
+from thumbor.context import Context, ServerParameters
 from thumbor.engines import BaseEngine
+from thumbor.importer import Importer
 
 FACE_IMAGE_PATH = abspath(join(dirname(__file__), "face_photo.jpg"))
 DEFAULT_IMAGE_PATH = abspath(join(dirname(__file__), "image.jpg"))
@@ -48,12 +50,26 @@ class JPEGImageExtension(SingleFileSnapshotExtension):
 
 class EngineTestSuite:
     @pytest.fixture(autouse=True)
-    def engine(self, context: Optional[Context]) -> Optional[BaseEngine]:
+    def engine(
+        self,
+        context: Optional[Context],  # pylint: disable=unused-argument
+    ) -> BaseEngine:
         return None
 
     @pytest.fixture(autouse=True)
-    def context(self) -> Optional[Context]:
-        return None
+    def config(self) -> Config:
+        return Config()
+
+    @pytest.fixture(autouse=True)
+    def context(self, config: Config) -> Context:
+        importer = Importer(config)
+        importer.import_modules()
+        server = ServerParameters(
+            8889, "localhost", "thumbor.conf", None, "info", None
+        )
+        server.security_key = config.SECURITY_KEY
+
+        return Context(server, config, importer)
 
     @pytest.fixture(autouse=True)
     def default_image(self) -> bytes:
@@ -88,6 +104,15 @@ class EngineTestSuite:
         size = engine.size
 
         assert size == (300, 400)
+
+    def test_get_size_raises_if_no_image(self, engine: BaseEngine) -> None:
+        try:
+            engine.size  # noqa pylint: disable=pointless-statement
+            raise AssertionError("Should not have gotten this far")
+        except RuntimeError as error:
+            assert (
+                str(error) == "Image must be loaded before verifying size."
+            ), str(error)
 
     def test_can_generate_blue_image(
         self,

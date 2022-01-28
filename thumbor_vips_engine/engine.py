@@ -29,6 +29,7 @@ class Engine(BaseEngine):  # pylint: disable=too-many-public-methods
     image: pyvips.Image = None
 
     def create_image(self, buffer: bytes) -> pyvips.Image:
+        # TODO: Get from thumbor context whether access needs to be random
         self.image = pyvips.Image.new_from_buffer(buffer, "", access="random")
 
         return self.image

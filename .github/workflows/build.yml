@@ -8,13 +8,14 @@ jobs:
       fail-fast: false
       matrix:
         python-version:
-          # - '3.7'
-          # - '3.8'
-          # - '3.9'
+          - '3.7'
+          - '3.8'
+          - '3.9'
           - '3.10'
+    # container: ubuntu:22.04
     steps:
       - uses: actions/checkout@v2
       - name: Run Unit Tests
-        run: make docker-unit
+        run: make docker-test
       - name: Lint
         run: make docker-lint

@@ -11,14 +11,13 @@
 <p align="center">
   <img src='https://github.com/thumbor/thumbor-vips-engine/workflows/build/badge.svg' />
   <a href='https://coveralls.io/github/thumbor/thumbor-vips-engine?branch=main'><img src='https://coveralls.io/repos/github/thumbor/thumbor-vips-engine/badge.svg?branch=main' alt='Coverage Status' /></a>
-</p>
-<p align="center">
   <a href='https://github.com/thumbor/thumbor-vips-engine/pulls' target='_blank'>
     <img src='https://img.shields.io/github/issues-pr-raw/thumbor/thumbor-vips-engine.svg'/>
   </a>
   <a href='https://github.com/thumbor/thumbor-vips-engine/issues' target='_blank'>
     <img src='https://img.shields.io/github/issues-raw/thumbor/thumbor-vips-engine.svg'/>
   </a>
+  <br />
   <a href='https://pypi.python.org/pypi/thumbor-vips-engine' target='_blank'>
     <img src='https://img.shields.io/pypi/v/thumbor-vips-engine.svg'/>
   </a>

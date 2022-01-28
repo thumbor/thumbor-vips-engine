@@ -20,7 +20,7 @@ jobs:
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: PYTHON_VERSION=${{ matrix.python-version}} make docker-unit-coverage
+        run: PYTHON_VERSION=${{ matrix.python-version}} make docker-test-coverage
       - name: Run Unit Tests
         if: matrix.image-tag != '3.10'
         run: PYTHON_VERSION=${{ matrix.python-version}} make docker-test

@@ -18,6 +18,7 @@ jobs:
       - name: Run Unit Tests with coverage
         if: matrix.python-version == '3.10'
         env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: PYTHON_VERSION=${{ matrix.python-version}} make docker-test-coverage
       - name: Run Unit Tests

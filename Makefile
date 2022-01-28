@@ -27,6 +27,9 @@ publish:
 	@twine upload dist/*
 	@rm -rf dist/
 
+ci-venv:
+	@. ~/pyvips/bin/activate
+
 docker-build:
 	@docker build -t thumbor-pyvips-engine .
 

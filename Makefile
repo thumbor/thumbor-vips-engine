@@ -44,8 +44,17 @@ docker-run: docker-build
 
 docker-test: docker-build docker-unit
 
+docker-test-coverage: docker-build docker-unit-with-coverage
+
 docker-unit:
 	@docker run --rm -v $$(pwd):/app ${DOCKER_IMAGE}:latest /bin/bash -l -c "make local-unit"
+
+docker-unit-with-coverage:
+	@docker run --rm -v $$(pwd):/app ${DOCKER_IMAGE}:latest /bin/bash -l -c "make local-unit coveralls"
+
+coveralls:
+	@pip install --upgrade coveralls
+	@coveralls --service=github
 
 docker-lint:
 	@docker run --rm -v $$(pwd):/app ${DOCKER_IMAGE}:latest /bin/bash -l -c "make flake pylint"

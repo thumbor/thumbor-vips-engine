@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run Unit Tests with coverage
-        if: matrix.image-tag == '3.10'
+        if: matrix.python-version == '3.10'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: PYTHON_VERSION=${{ matrix.python-version}} make docker-test-coverage

@@ -51,14 +51,9 @@ class JPEGImageExtension(SingleFileSnapshotExtension):
 class EngineTestSuite:
     @pytest.fixture(autouse=True)
     def engine(
-<<<<<<< HEAD
         self,
         context: Optional[Context],  # pylint: disable=unused-argument
     ) -> BaseEngine:
-=======
-        self, context: Optional[Context]  # pylint: disable=unused-argument
-    ) -> Optional[BaseEngine]:
->>>>>>> Additional tests
         return None
 
     @pytest.fixture(autouse=True)
@@ -130,15 +125,9 @@ class EngineTestSuite:
 
         assert size == (300, 400)
 
-<<<<<<< HEAD
-    def test_get_size_raises_if_no_image(self, engine: BaseEngine) -> None:
-        try:
-            engine.size  # noqa pylint: disable=pointless-statement
-=======
     def test_size_fails_if_no_image_created(self, engine: BaseEngine) -> None:
         try:
             engine.size  # pylint: disable=pointless-statement
->>>>>>> Additional tests
             raise AssertionError("Should not have gotten this far")
         except RuntimeError as error:
             assert (

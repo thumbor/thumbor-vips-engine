@@ -41,10 +41,12 @@ docker-shell: docker-build
 docker-run: docker-build
 	@docker run --rm -v $$(pwd):/app ${DOCKER_IMAGE}:latest /bin/bash -l -c "make local-run"
 
-docker-test: docker-build
+docker-test: docker-build docker-unit
+
+docker-unit:
 	@docker run --rm -v $$(pwd):/app ${DOCKER_IMAGE}:latest /bin/bash -l -c "make local-unit"
 
-docker-lint: docker-build
+docker-lint:
 	@docker run --rm -v $$(pwd):/app ${DOCKER_IMAGE}:latest /bin/bash -l -c "make flake pylint"
 
 docker-push:

@@ -15,6 +15,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run Unit Tests
-        run: make docker-test
+        run: make docker-unit
       - name: Lint
         run: make docker-lint

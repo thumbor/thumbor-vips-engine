@@ -105,6 +105,15 @@ class EngineTestSuite:
 
         assert size == (300, 400)
 
+    def test_get_size_raises_if_no_image(self, engine: BaseEngine) -> None:
+        try:
+            engine.size  # noqa pylint: disable=pointless-statement
+            raise AssertionError("Should not have gotten this far")
+        except RuntimeError as error:
+            assert (
+                str(error) == "Image must be loaded before verifying size."
+            ), str(error)
+
     def test_can_generate_blue_image(
         self,
         engine: BaseEngine,

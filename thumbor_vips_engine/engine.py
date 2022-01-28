@@ -28,12 +28,10 @@ FORMATS = {
 class Engine(BaseEngine):  # pylint: disable=too-many-public-methods
     image: pyvips.Image = None
 
-    @property
-    def size(self) -> tuple[int, int]:
-        if self.image is None:
-            raise RuntimeError("Image must be loaded before verifying size.")
+    def create_image(self, buffer: bytes) -> pyvips.Image:
+        self.image = pyvips.Image.new_from_buffer(buffer, "", access="random")
 
-        return (int(self.image.width), int(self.image.height))
+        return self.image
 
     def gen_image(
         self, size: tuple[int, int], color: Union[int, tuple[int, int, int]]
@@ -43,12 +41,12 @@ class Engine(BaseEngine):  # pylint: disable=too-many-public-methods
 
         return image
 
-    def create_image(self, buffer: bytes) -> pyvips.Image:
-        self.image = pyvips.Image.new_from_buffer(
-            buffer, "", access="sequential"
-        )
+    @property
+    def size(self) -> tuple[int, int]:
+        if self.image is None:
+            raise RuntimeError("Image must be loaded before verifying size.")
 
-        return self.image
+        return (int(self.image.width), int(self.image.height))
 
     def crop(self, left: int, top: int, right: int, bottom: int) -> None:
         self.image = self.image.crop(left, top, right - left, bottom - top)
@@ -78,7 +76,7 @@ class Engine(BaseEngine):  # pylint: disable=too-many-public-methods
         :param degrees: Amount to rotate in degrees.
         :type amount: int
         """
-        raise NotImplementedError()
+        self.image = self.image.rot(degrees)
 
     def read_multiple(
         self, images: List[bytes], extension: Optional[str] = None

@@ -116,6 +116,19 @@ class EngineTestSuite:
                 error
             )
 
+    def test_can_generate_blue_image(
+        self,
+        engine: BaseEngine,
+        snapshot: SnapshotAssertion,
+    ) -> None:
+        img = engine.gen_image((40, 30), (0, 0, 255))
+        engine.image = img
+
+        assert img is not None
+        assert img.width == 40
+        assert img.height == 30
+        assert engine.read(".jpg", 95) == snapshot
+
     def test_can_get_size(
         self, engine: BaseEngine, default_image: bytes
     ) -> None:
@@ -134,18 +147,29 @@ class EngineTestSuite:
                 str(error) == "Image must be loaded before verifying size."
             ), str(error)
 
-    def test_can_generate_blue_image(
+    @pytest.mark.parametrize(
+        "dimensions,expected",
+        [
+            ((10, 20, 410, 420), (400, 400)),
+            ((0, 0, 0, 0), (800, 533)),
+            ((300, 300, 200, 200), (800, 533)),
+        ],
+    )
+    def test_can_crop(
         self,
+        face_image: bytes,
         engine: BaseEngine,
         snapshot: SnapshotAssertion,
+        dimensions: Tuple[int, int, int, int],
+        expected: Tuple[int, int],
     ) -> None:
-        img = engine.gen_image((40, 30), (0, 0, 255))
-        engine.image = img
+        engine.create_image(face_image)  # 800x533
 
-        assert img is not None
-        assert img.width == 40
-        assert img.height == 30
-        assert engine.read(".jpg", 95) == snapshot
+        engine.crop(*dimensions)
+
+        contents = engine.read(".jpg", 95)
+        assert engine.size == expected
+        assert contents == snapshot
 
     @pytest.mark.parametrize(
         "dimensions,expected",
@@ -175,20 +199,6 @@ class EngineTestSuite:
         assert (
             contents == snapshot
         ), f"Snapshot failed for resize to {dimensions}"
-
-    def test_can_crop(
-        self,
-        face_image: bytes,
-        engine: BaseEngine,
-        snapshot: SnapshotAssertion,
-    ) -> None:
-        engine.create_image(face_image)
-
-        engine.crop(10, 20, 410, 420)
-
-        contents = engine.read(".jpg", 95)
-        assert engine.size == (400, 400)
-        assert contents == snapshot
 
     def test_can_flip_horizontally(
         self,

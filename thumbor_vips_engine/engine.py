@@ -53,6 +53,9 @@ class Engine(BaseEngine):  # pylint: disable=too-many-public-methods
         return (int(self.image.width), int(self.image.height))
 
     def crop(self, left: int, top: int, right: int, bottom: int) -> None:
+        if right <= left or bottom <= top:
+            return
+
         self.image = self.image.crop(left, top, right - left, bottom - top)
 
     def resize(self, width: int, height: int) -> None:

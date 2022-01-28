@@ -37,18 +37,73 @@ TESTS_REQUIREMENTS = [
     "syrupy==1.*,>=1.7.3",
 ]
 
+VIPS_REPO = "https://github.com/thumbor/thumbor-vips-engine"
+
 
 setup(
     name="thumbor_vips_engine",
     version=__version__,
     description="thumbor libvips engine",
-    long_description="""
-thumbor engine using the libvips imaging library for transforming images
+    long_description=f"""
+## ⚙️ Installation
+
+```bash
+pip install thumbor-vips-engine
+```
+
+## 🎯 Features
+
+- libvips based engine
+- Conforms with thumbor 7 engine specs
+- Python 3 compliant
+
+## Usage
+
+### Configuring thumbor
+
+Configure your `thumbor.conf` file to point to `thumbor_vips_engine`:
+
+```
+ENGINE = "thumbor_vips_engine.engine"
+```
+
+### Troubles?
+
+If you experience any troubles, try running:
+
+```bash
+thumbor-doctor
+```
+
+If you still need help, please
+[raise an issue]({VIPS_REPO}/issues).
+
+## 👀 Thumbor
+
+[thumbor-vips-engine]({VIPS_REPO}) stands on
+the shoulders of [thumbor](https://github.com/thumbor/thumbor)! If you are not
+familiar with [thumbor](https://github.com/thumbor/thumbor),
+please check the [docs](https://thumbor.readthedocs.io/en/latest/)
+or you can see a demo at http://thumborize.me/
+
+## 👍 Contribute
+
+thumbor-vips-engine is an open-source project with many contributors. Join them
+[contributing code]({VIPS_REPO}/blob/master/CONTRIBUTING.md) or
+[contributing documentation]({VIPS_REPO}/blob/master/CONTRIBUTING.md).
+
+Join the chat at https://gitter.im/thumbor/thumbor
+
+## License
+
+Apache License
+Version 2.0, January 2004
+http://www.apache.org/licenses/
 """,
     keywords=("imaging face detection feature thumbnail libvips vips"),
     author="Bernardo Heynemann",
     author_email="heynemann@gmail.com",
-    url="https://github.com/thumbor/thumbor_vips_engine",
+    url=VIPS_REPO,
     license="Apache2",
     python_requires=">=3.6",
     classifiers=[

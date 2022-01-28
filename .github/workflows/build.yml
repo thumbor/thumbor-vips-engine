@@ -15,45 +15,7 @@ jobs:
     # container: ubuntu:22.04
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python-version }}
-          architecture: x64
-      # - name: Code Climate Before Build
-        # if: matrix.python-version == '3.10'
-        # env:
-          # code_climate_token: ${{ secrets.CODE_CLIMATE_TOKEN }}
-        # run: |-
-          # curl -L -O https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
-          # chmod +x test-reporter-latest-linux-amd64
-          # ./test-reporter-latest-linux-amd64 before-build
-      - name: Create Virtualenv
-        run: python3 -m venv ~/thumbor-libvips-engine
-      - name: Activate Virtualenv
-        run: . ~/thumbor-libvips-engine/bin/activate
-      - name: Update PIP
-        run: python3 -m pip install -U pip
-      - name: APT Update
-        run: sudo apt-get update -y
-      - name: APT Install
-        run: DEBIAN_FRONTEND=noninteractive sudo apt-get install -y python3-dev libcurl4-openssl-dev
-          libgnutls28-dev python3-all-dev make zlib1g-dev gcc libssl-dev build-essential
-      - name: Setup
-        run: make ci-venv setup
       - name: Run Unit Tests
-        run: make ci-venv test
+        run: make docker-test
       - name: Lint
-        run: make ci-venv flake pylint
-      # - name: Coveralls
-        # if: matrix.python-version == '3.10'
-        # env:
-          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        # run: |
-          # pip install --upgrade coveralls
-          # coveralls --service=github
-      # - name: Code Climate After Build
-        # if: matrix.python-version == '3.10'
-        # env:
-          # code_climate_token: ${{ secrets.CODE_CLIMATE_TOKEN }}
-        # run: |-
-          # ./test-reporter-latest-linux-amd64 after-build -t cobertura --exit-code 0 -r ${code_climate_token}
+        run: make docker-lint

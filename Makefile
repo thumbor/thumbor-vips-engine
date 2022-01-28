@@ -40,4 +40,7 @@ docker-run: docker-build
 	@docker run --rm -it -v $$(pwd):/app thumbor-pyvips-engine:latest /bin/bash -l -c "make local-run"
 
 docker-test: docker-build
-	@docker run --rm -it -v $$(pwd):/app thumbor-pyvips-engine:latest /bin/bash -l -c "make local-unit"
+	@docker run --rm -it -v $$(pwd):/app thumbor-pyvips-engine:latest /bin/bash -l -c "make local-test"
+
+docker-lint: docker-build
+	@docker run --rm -it -v $$(pwd):/app thumbor-pyvips-engine:latest /bin/bash -l -c "make flake pylint"

@@ -1,0 +1,11 @@
+prune dist
+prune build
+recursive-include thumbor_vips_engine *.py
+recursive-include thumbor_vips_engine *.conf
+recursive-include thumbor_vips_engine *.jpg
+recursive-include thumbor_vips_engine *.png
+recursive-include thumbor_vips_engine *.gif
+
+include LICENSE README.mkd CHANGELOG
+recursive-include docs *
+prune docs/_build

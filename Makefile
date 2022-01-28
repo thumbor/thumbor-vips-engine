@@ -1,9 +1,13 @@
 setup:
 	@python3 -m pip install -e .[tests]
 
-test: unit flake pylint
+test: docker-test flake pylint
 
-unit:
+run: docker-run
+
+local-test: local-unit flake pylint
+
+local-unit:
 	@python3 -m pytest --cov=thumbor_vips_engine tests/
 
 format:
@@ -15,13 +19,22 @@ flake:
 pylint:
 	@python3 -m pylint thumbor_vips_engine tests
 
-run:
-	@python3 -m thumbor -c thumbor.conf -l debug
+local-run:
+	@thumbor -c thumbor.conf -l debug
 
 publish:
 	@python setup.py sdist
 	@twine upload dist/*
 	@rm -rf dist/
 
-ci-venv:
-		@. ~/thumbor-libvips-engine/bin/activate
+docker-build:
+	@docker build -t thumbor-pyvips-engine .
+
+docker-shell: docker-build
+	@docker run --rm -it -v $$(pwd):/app thumbor-pyvips-engine:latest /bin/bash -l
+
+docker-run: docker-build
+	@docker run --rm -it -v $$(pwd):/app thumbor-pyvips-engine:latest /bin/bash -l -c "make local-run"
+
+docker-test: docker-build
+	@docker run --rm -it -v $$(pwd):/app thumbor-pyvips-engine:latest /bin/bash -l -c "make local-unit"

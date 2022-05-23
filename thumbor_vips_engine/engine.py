@@ -1,8 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# thumbor aws extensions
-# https://github.com/thumbor/thumbor-aws
+# thumbor vips engine
+# https://github.com/thumbor/thumbor-vips-engine
 
 # Licensed under the MIT license:
 # http://www.opensource.org/licenses/mit-license
